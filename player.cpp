@@ -29,11 +29,13 @@ void Player::initializeShips(int playerID) {
     srand(playerID);
 
     int count = 0;
+    this->m_numShipBoxes = 0;
 
     while (count < 5) {
 
         bool placed = false;
         int ship_size = 5 - count;
+        this->m_numShipBoxes += ship_size;
 
         /* Choose random orientation: Horizontal = 0, Vertical = 1*/
         int orientation = rand() % 2;
@@ -74,6 +76,10 @@ void Player::initializeShips(int playerID) {
     this->printShips();
 }
 
+int Player::getNumBoxes() {
+    return this->m_numShipBoxes;
+}
+
 void Player::printShips() {
     for (int i = 0; i < m_ships.size(); i++) {
         Battleship* ship = m_ships[i];
@@ -87,10 +93,15 @@ vector<Battleship*> Player::getShipLocations() {
     return this->m_ships;
 }
 
+int Player::getNumHits() {
+    return this->m_hits;
+}
+
 bool Player::isBoxHit(Player* player, string box) {
     /* Opponent's battleships */
     vector<Battleship*> oppShips = player->getShipLocations();
 
+    /* Search for the selected box in the opponent's ships */
     for (int i = 0; i < oppShips.size(); i++) {
         Battleship* ship = oppShips[i];
         vector<string> strShip = ship->getShip();
@@ -107,18 +118,8 @@ bool Player::isBoxHit(Player* player, string box) {
 }
 
 bool Player::isPlayerDone() {
-    int totalBoxes = 0;
-
-    for (int i = 0; i < this->m_ships.size(); i++) {
-        Battleship* ship = this->m_ships[i];
-        totalBoxes += ship->getSize();
-    }
-
-    if (m_hits == totalBoxes)
+    if (m_hits == m_numShipBoxes)
         return true;
-
-    cout << "Max: " << totalBoxes << endl;
-    cout << "Hits: " << m_hits << endl;
 
     return false;
 }

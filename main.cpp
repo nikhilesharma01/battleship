@@ -34,31 +34,45 @@ int main() {
     while( player1.isPlayerDone() == false && player2.isPlayerDone() == false) {
         /* Player1's turn */
         while (result1 == true) {
-            cout << "Player1: Choose the opponent's box to hit: " << endl;
-            cin >> box;
-            cout << "Player 1 chooses to hit: " << box << endl;
+            if (player1.getNumHits() < player1.getNumBoxes()) {
+                cout << "Player1: Choose the opponent's box to hit: " << endl;
+                cin >> box;
+                cout << "Player 1 chooses to hit: " << box << endl;
 
-            result1 = player1.isBoxHit(&player2, box);
+                result1 = player1.isBoxHit(&player2, box);
 
-            if (result1 == true)
-                cout << "Result: HIT!" << endl;
+                if (result1 == true)
+                    cout << "Result: HIT!" << endl;
+                else
+                    cout << "Result: MISS!" << endl;
+            }
             else
-                cout << "Result: MISS!" << endl;
+                break;
         }
+
+        if (player1.isPlayerDone() == true)
+            break;
 
         /* Player2's turn */
         while (result2 == true) {
-            cout << "Player 2: Choose the opponent's box to hit: " << endl;
-            cin >> box;
-            cout << "Player 2 chooses to hit: " << box << endl;
+            if (player2.getNumHits() < player2.getNumBoxes()) {
+                cout << "Player 2: Choose the opponent's box to hit: " << endl;
+                cin >> box;
+                cout << "Player 2 chooses to hit: " << box << endl;
 
-            result2 = player2.isBoxHit(&player1, box);
+                result2 = player2.isBoxHit(&player1, box);
 
-            if (result2 == true)
-                cout << "Result: HIT!" << endl;
+                if (result2 == true)
+                    cout << "Result: HIT!" << endl;
+                else
+                    cout << "Result: MISS!" << endl;
+            }
             else
-                cout << "Result: MISS!" << endl;
+                break;
         }
+
+        if (player2.isPlayerDone() == true)
+            break;
     }
 
     if (player1.isPlayerDone() == true && player2.isPlayerDone() == false)

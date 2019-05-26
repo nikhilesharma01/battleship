@@ -12,6 +12,7 @@ class Player {
 private:
     static int m_playerID;
     int m_hits;
+    int m_numShipBoxes;
     Board m_board;
     vector<Battleship*> m_ships;
 
@@ -21,9 +22,11 @@ public:
 
     void initializeBoard(int rows, int cols);
     void initializeShips(int playerID);
+    int getNumBoxes();
     void printShips();
     vector<Battleship*> getShipLocations();
 
+    int getNumHits();
     bool isBoxHit(Player* player, string box);
     bool isPlayerDone();
 };
